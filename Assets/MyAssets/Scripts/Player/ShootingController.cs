@@ -3,6 +3,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ShootingController : MonoBehaviour
 {
@@ -34,6 +35,14 @@ public class ShootingController : MonoBehaviour
 	[Tooltip("Force at which projectile will be shot out")]
 	private float _projectileForce = 10.0f;
 
+	[SerializeField]
+	[Tooltip("Prefix text for ammunition")]
+	private string _ammoPrefixText = "Ammo: ";
+
+	[SerializeField]
+	[Tooltip("Text box which gives player info on ammunition")]
+	private Text _ammoText;
+
 	private int _currentAmmoInClip = 0;
 
 	private int _currentAmmoOutsideTheClip = 0;
@@ -46,6 +55,7 @@ public class ShootingController : MonoBehaviour
 
 		_currentAmmoInClip = Mathf.Clamp(_startingAmmoAmount, _startingAmmoAmount, _ammoPerClip);
 		_currentAmmoOutsideTheClip = _startingAmmoAmount - _currentAmmoInClip;
+		_ammoText.text = _ammoPrefixText + _currentAmmoInClip.ToString() + " / " + _currentAmmoOutsideTheClip.ToString();
 	}
 
 	private void Update()
@@ -70,7 +80,7 @@ public class ShootingController : MonoBehaviour
 			{
 				_isReloading = true;
 				yield return new WaitForSeconds(_reloadTimeInSeconds);
-				int bulletsTransferedToClip = Mathf.Clamp(_ammoPerClip - _currentAmmoInClip, _ammoPerClip - _currentAmmoInClip, _currentAmmoOutsideTheClip); //TODO FIX
+				int bulletsTransferedToClip = Mathf.Clamp(_ammoPerClip - _currentAmmoInClip, _ammoPerClip - _currentAmmoInClip, _currentAmmoOutsideTheClip);
 				_currentAmmoInClip += bulletsTransferedToClip;
 				_currentAmmoOutsideTheClip -= bulletsTransferedToClip;
 				_isReloading = false;
@@ -79,7 +89,7 @@ public class ShootingController : MonoBehaviour
 			{
 				yield return null;
 			}
-			//TODO Update UI Text on Ammo
+			_ammoText.text = _ammoPrefixText + _currentAmmoInClip.ToString() + " / " + _currentAmmoOutsideTheClip.ToString();
 		}
 
 		yield return new WaitForSeconds(_reloadTimeInSeconds);
@@ -93,12 +103,12 @@ public class ShootingController : MonoBehaviour
 		projectile.transform.position = _shootingTransform.position;
 		projectile.transform.rotation = _shootingTransform.rotation;
 		projectile.SetActive(true);
-		projectile.GetComponent<Rigidbody>().AddForce(_shootingTransform.forward * _projectileForce, ForceMode.VelocityChange);
+		projectile.GetComponent<Rigidbody>().velocity = _shootingTransform.forward * _projectileForce;
 	}
 
 	public void AddAmmo(int amountOfAmmo)
 	{
 		_currentAmmoOutsideTheClip += amountOfAmmo;
-		//TODO Update UI Text on Ammo
+		_ammoText.text = _ammoPrefixText + _currentAmmoInClip.ToString() + " / " + _currentAmmoOutsideTheClip.ToString();
 	}
 }
