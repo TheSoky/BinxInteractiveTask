@@ -1,5 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿#pragma warning disable 649
+
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -28,7 +28,7 @@ public class PlayerHealth : MonoBehaviour
 		_healthBarSlider.value = _currentHealth / _maxHealth;
 		if(_currentHealth <= 0.0f)
 		{
-			//TODO Trigger death and end game
+			GameManager.Instance.TriggerEndGame(false);
 		}
 	}
 

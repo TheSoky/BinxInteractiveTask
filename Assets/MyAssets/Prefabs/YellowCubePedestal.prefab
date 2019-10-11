@@ -169,7 +169,7 @@ GameObject:
   - component: {fileID: 5919987908575364889}
   m_Layer: 10
   m_Name: Yellow Cube
-  m_TagString: Pickupable
+  m_TagString: YellowCube
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

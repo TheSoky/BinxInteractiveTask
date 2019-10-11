@@ -19,7 +19,6 @@ public class EnemyWaypoint : MonoBehaviour
 
 	private NavMeshAgent _enemyNavMeshAgent;
 
-	private bool _shouldSetOnEnable = false;
 
 	private void Awake()
 	{
@@ -30,16 +29,7 @@ public class EnemyWaypoint : MonoBehaviour
 	private void Start()
 	{
 		_enemyNavMeshAgent.SetDestination(_enemyWaypointManager.GetNextWaypointPosition());
-		_shouldSetOnEnable = true;
 		transform.SetParent(_newWaypointParent);
-	}
-
-	private void OnEnable()
-	{
-		if(_shouldSetOnEnable)
-		{
-			_enemyNavMeshAgent.SetDestination(_enemyWaypointManager.GetNextWaypointPosition());
-		}
 	}
 
 	private void OnTriggerEnter(Collider other)

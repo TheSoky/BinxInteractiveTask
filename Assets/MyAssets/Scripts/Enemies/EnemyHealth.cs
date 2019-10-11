@@ -45,6 +45,7 @@ public class EnemyHealth : MonoBehaviour
 
 	private void OnDisable()
 	{
+		GameManager.Instance.CheckIfGameIsWon();
 		Invoke("ActivateEnemy", _respawnTime);
 	}
 

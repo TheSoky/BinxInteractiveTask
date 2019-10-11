@@ -44,17 +44,16 @@ public class PlayerPickupController : MonoBehaviour
 				switch(hitResult.transform.name)
 				{
 					case "Green Cube":
-						Debug.Log("Green Cube added to inventory");
+						GameManager.Instance.CollectGreenCube();
 						hitResult.transform.gameObject.SetActive(false);
 						break;
 
 					case "Yellow Cube":
-						Debug.Log("Yellow Cube added to inventory");
+						GameManager.Instance.CollectYellowCube();
 						hitResult.transform.gameObject.SetActive(false);
 						break;
 
 					case "Purple Sphere":
-						Debug.Log("Purple Sphere collected");
 						_playerHealth.ModifyHealth(25.0f);
 						hitResult.transform.gameObject.SetActive(false);
 						break;

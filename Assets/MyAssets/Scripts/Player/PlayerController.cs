@@ -26,8 +26,9 @@ public class PlayerController : MonoBehaviour
 	[Tooltip("Layer mask on which is ground set")]
 	private LayerMask _groundLayerMask;
 
-
-    //Transform of a FPS Camera
+	[SerializeField]
+	[Tooltip("Main Camera transform, FPS camera for player in this scene")]
+	//Necessary because otherwisse it takes camera from loading scene
     private Transform _mainCameraTransform;
 
     //Cached character controller for access in code
@@ -36,15 +37,13 @@ public class PlayerController : MonoBehaviour
 	//Checks the status of Jump() coroutine
 	bool _isJumping = false;
 
-    private void Awake() 
+    private void Start() 
     {
         _characterController = GetComponent<CharacterController>();
         if(_characterController == null) 
         {
             Debug.LogError("Players Character Controller not found");
         }
-
-        _mainCameraTransform = Camera.main.transform;
     }
 
     private void Update() 
